@@ -190,6 +190,43 @@ So “invoking from an LLM” here means: your user question → (optional LLM q
 
 ---
 
+## Pushing to GitHub
+
+To put this project in your GitHub account as **ML-RAG-101**:
+
+1. **Create the repository on GitHub**  
+   - Go to [github.com/new](https://github.com/new).  
+   - Repo name: `ML-RAG-101`.  
+   - Choose Public (or Private).  
+   - Do **not** add a README, .gitignore, or license (this project already has them).  
+   - Click **Create repository**.
+
+2. **Commit locally** (if you haven’t already):
+   ```bash
+   cd /path/to/ML-Rag-101
+   git add .
+   git commit -m "Initial commit: ML-RAG-101 news RAG pipeline"
+   ```
+
+3. **Add GitHub as remote and push**:
+   ```bash
+   git remote add origin https://github.com/anandharidas/ML-RAG-101.git
+   git branch -M main
+   git push -u origin main
+   ```
+   If you use SSH: `git remote add origin git@github.com:anandharidas/ML-RAG-101.git`
+
+4. **If the repo already existed** and you created it with a README, pull first then push:
+   ```bash
+   git remote add origin https://github.com/anandharidas/ML-RAG-101.git
+   git pull origin main --allow-unrelated-histories
+   git push -u origin main
+   ```
+
+Your repo will be at: **https://github.com/anandharidas/ML-RAG-101**
+
+---
+
 ## Quick reference: dependency list
 
 From `requirements.txt`:
