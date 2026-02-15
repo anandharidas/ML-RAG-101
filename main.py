@@ -1,9 +1,15 @@
-from ingester import ingest_news_feed
-from rag_llm import rag_query
+"""
+Start the RAG server. Runs until manually killed (Ctrl+C).
+"""
+from dotenv import load_dotenv
+import uvicorn
 
-# Ingest once
-ingest_news_feed()  # Logs indexing
+load_dotenv()
 
-# Query
-result = rag_query("Latest on AI regulations in EU")
-print(result)  # LLM-enhanced answer with logs throughout
+if __name__ == "__main__":
+    uvicorn.run(
+        "server:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=False,
+    )

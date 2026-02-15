@@ -120,20 +120,31 @@ export OLLAMA_HOST="http://localhost:11434"
 
 or pass the model explicitly in code (e.g. `model="ollama/llama3"`). LiteLLM will use Ollama by default when you use an `ollama/...` model name.
 
-### 3.3 Run the Full Pipeline
+### 3.3 Run the Server (default)
 
-**One-shot: ingest + one RAG query**
+The app runs as a **long-lived server** until you stop it (e.g. Ctrl+C):
 
 ```bash
 python main.py
 ```
 
-This will:
+Server listens on **http://0.0.0.0:8000** (port 8000). Stop with **Ctrl+C**. API docs: http://localhost:8000/docs — Health: http://localhost:8000/health
 
-1. Ingest the default news feed (BBC RSS), scrape articles, embed them, and index into ChromaDB under `./rag_db`.
-2. Run a single RAG query: *“Latest on AI regulations in EU”* and print the LLM’s answer.
+**Endpoints:** POST `/query` — body `{"query": "Your question", "model": "gpt-3.5-turbo"}` (model optional). POST `/ingest` — optional body `{"url": "https://..."}` to ingest that RSS feed (default: BBC).
 
-**Step by step from Python**
+**Example: RAG query**
+```bash
+curl -X POST http://localhost:8000/query -H "Content-Type: application/json" -d '{"query": "Latest on AI regulations in EU"}'
+```
+
+**Example: Ingest**
+```bash
+curl -X POST http://localhost:8000/ingest
+```
+
+
+
+**Step by step from Python (without using the server)**
 
 ```python
 from ingester import ingest_news_feed
@@ -184,7 +195,8 @@ So “invoking from an LLM” here means: your user question → (optional LLM q
 | `ingester.py` | Fetches RSS, scrapes articles, embeds and indexes into ChromaDB. |
 | `searcher.py` | Loads ChromaDB collection and runs semantic search. |
 | `rag_llm.py` | Query refinement + retrieval + prompt building + LLM call (`rag_query`). |
-| `main.py` | Runs ingest once and one example RAG query. |
+| `main.py` | Starts the RAG server (run until Ctrl+C). |
+| `server.py` | FastAPI app: `/query`, `/ingest`, `/health`, `/docs`. |
 | `requirements.txt` | Python dependencies (see above). |
 | `./rag_db/` | ChromaDB data (created on first ingest). |
 
