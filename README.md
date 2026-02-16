@@ -72,6 +72,17 @@ RAG improves grounding but doesn’t remove all errors. The model can still misr
 
 ## 3. How to Run This Project
 
+### Tutorial slideshow (optional)
+
+A **Rich-based terminal slideshow** explains RAG theory, how to construct RAG, and how LLM, Agent, and RAG interact, with references to this repo:
+
+```bash
+pip install rich   # or: pip install -r requirements.txt
+python tutorial_slideshow.py
+```
+
+Press **Enter** to advance slides; **Ctrl+C** to quit.
+
 ### Prerequisites
 
 - **Python 3.10+**

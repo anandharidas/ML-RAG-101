@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 def generate_query_llm(user_query: str, model: str = "gpt-3.5-turbo"):
     """LLM refines user query for better search."""
-    prompt = f"Refine this into a precise search query for current affairs: {user_query}"
+    prompt = f"Refine this into a precise search query for technology news: {user_query}"
     resp = litellm.completion(model=model, messages=[{"role": "user", "content": prompt}])
     refined = resp.choices[0].message.content.strip()
     logger.info(f"Refined query: '{refined}'")
@@ -28,7 +28,7 @@ def rag_query(user_query: str, model: str = "gpt-3.5-turbo"):
     context = "\n\n".join([f"{meta['title']}: {doc[:500]}..." for doc, meta in zip(docs, metas)])
     
     # Step 3: LLM with RAG context
-    rag_prompt = f"""Using this current affairs context:
+    rag_prompt = f"""Using this technology news context:
 {context}
 
 Answer: {user_query}"""
